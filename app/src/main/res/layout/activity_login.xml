@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zaylabs.truckitzaylabsv1driver.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <EditText
+            android:id="@+id/etSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/Email_Desc"
+            android:inputType="textEmailAddress"
+            android:text="@string/Email"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/Hint_Password"
+            android:inputType="textPassword"
+            android:text="@string/Password" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/btnSignInDesc"
+            android:text="@string/Sign_In_btn" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnLRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/Register_login"
+            android:text="@string/Register_login" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnLForgetPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/Forget_Password"
+            android:text="@string/Forget_Password" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

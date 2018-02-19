@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1043887969653",
+    "firebase_url": "https://truckitzaylabsv1.firebaseio.com",
+    "project_id": "truckitzaylabsv1",
+    "storage_bucket": "truckitzaylabsv1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043887969653:android:cf32144f13845bbf",
+        "android_client_info": {
+          "package_name": "com.zaylabs.truckitzaylabsv1driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1043887969653-8r97r5qubh796va5ua5mv3oqngerhb7i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zaylabs.truckitzaylabsv1driver",
+            "certificate_hash": "3b8608d4beb9dc1f74c41a3b3cdb09595e45a9f0"
+          }
+        },
+        {
+          "client_id": "1043887969653-3v2o8ou2hi4gsc59uhb310auc46jd90g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFbMb3njrovcSbuIgc_w0DyzLLXeBu6bc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1043887969653-3v2o8ou2hi4gsc59uhb310auc46jd90g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
