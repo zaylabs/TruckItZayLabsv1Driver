@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/Email_Desc"
             android:inputType="textEmailAddress"
-            android:text="@string/Email"
+            android:hint="@string/Email"
             tools:ignore="LabelFor"
             android:gravity="center"
             android:background="@color/primaryAccentColor"
@@ -42,7 +42,7 @@
             android:gravity="center"
             android:hint="@string/Hint_Password"
             android:inputType="textPassword"
-            android:text="@string/Password"
+
 
             />
 

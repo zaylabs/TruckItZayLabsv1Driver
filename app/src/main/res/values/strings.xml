@@ -9,7 +9,7 @@
     <string name="Hint_Email">Enter registered email</string>
     <string name="Password">Enter Password</string>
     <string name="Password_Desc">Password</string>
-    <string name="Hint_Password">Enter Registered password</string>
+    <string name="Hint_Password">Enter password</string>
     <string name="Register_login">Register</string>
     <string name="Forget_Password">Forget Password</string>
 
