@@ -26,6 +26,7 @@
 
     <!--Forget Password-->
     <string name="Forget_Email">Email Address</string>
+    <string name="Back">Back to Login Page</string>
 
     <!--Driver Profile-->
     <string name="btnUpdate">Save</string>

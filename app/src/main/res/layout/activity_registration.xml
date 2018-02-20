@@ -20,7 +20,8 @@
             android:contentDescription="@string/Email_Desc"
             android:inputType="textEmailAddress"
             android:text="@string/Email"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:layout_marginTop="40sp"/>
 
         <EditText
             android:id="@+id/etPassword"
@@ -28,15 +29,10 @@
             android:layout_height="wrap_content"
             android:hint="@string/Hint_Password"
             android:inputType="textPassword"
-            android:text="@string/Password" />
+            android:text="@string/Password"
+            android:layout_marginBottom="40sp"
+            />
 
-        <EditText
-            android:id="@+id/etPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/Hint_Password"
-            android:inputType="phone"
-            android:text="@string/Phone_Number" />
 
 
         <android.support.v7.widget.AppCompatButton
@@ -44,7 +40,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/Register_btn"
-            android:text="@string/Register_btn" />
+            android:text="@string/Register_btn"
+            android:background="@color/primaryColor"
+            android:gravity="center"
+
+            />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
+
+<!--<EditText
+android:id="@+id/etPhone"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="@string/Hint_Password"
+android:inputType="phone"
+android:text="@string/Phone_Number" />-->

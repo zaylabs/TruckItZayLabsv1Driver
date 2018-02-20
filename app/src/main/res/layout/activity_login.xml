@@ -11,7 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:gravity="center"
+
         >
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher_round"
+            android:layout_marginBottom="40sp"
+            />
 
         <EditText
             android:id="@+id/etSignIn"
@@ -20,35 +28,58 @@
             android:contentDescription="@string/Email_Desc"
             android:inputType="textEmailAddress"
             android:text="@string/Email"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:gravity="center"
+            android:background="@color/primaryAccentColor"
+            />
 
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="40sp"
+            android:background="@color/primaryAccentColor"
+            android:gravity="center"
             android:hint="@string/Hint_Password"
             android:inputType="textPassword"
-            android:text="@string/Password" />
+            android:text="@string/Password"
+
+            />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/btnSignInDesc"
-            android:text="@string/Sign_In_btn" />
+            android:text="@string/Sign_In_btn"
+            android:gravity="center"
+            android:background="@color/primaryColor"
+            android:layout_marginBottom="40sp"
+            android:textColor="@color/primaryTextColor"
+
+            />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnLRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/Register_login"
-            android:text="@string/Register_login" />
+            android:text="@string/Register_login"
+            android:gravity="center"
+            android:background="@color/primaryColor"
+            android:layout_marginBottom="40sp"
+            android:textColor="@color/primaryTextColor"
+            />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnLForgetPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/Forget_Password"
-            android:text="@string/Forget_Password" />
+            android:text="@string/Forget_Password"
+            android:gravity="center"
+            android:background="@color/primaryColor"
+            android:textColor="@color/primaryTextColor"
+            />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
