@@ -9,10 +9,15 @@
     <string name="Hint_Email">Enter registered email</string>
     <string name="Password">Enter Password</string>
     <string name="Password_Desc">Password</string>
-    <string name="Hint_Password">Enter password</string>
+    <string name="Hint_Password">Enter Password</string>
     <string name="Register_login">Register</string>
-    <string name="Forget_Password">Forget Password</string>
-
+    <string name="Forget_Password">Forget Password ?</string>
+    <string name="Home">Home</string>
+    <string name="take_photo_prompt">Upload Picture</string>
+    <string name="camera_button_text">Upload</string>
+    <string name="imagelink">ImageLink</string>
+    <string name="chooseimage">Choose Image:</string>
+    <string name="payment">Payment</string>
     <!--Registration-->
     <string name="Register_btn">Register</string>
     <string name="Email_Register">Email</string>
@@ -22,22 +27,21 @@
     <string name="Phone_Number">Enter Phone Number</string>
     <string name="Hint_Phone">+92 123 4567890</string>
     <string name="Company_Name">Company Name</string>
-
-
+    <string name="NotRegistered">Not Registered ?</string>
     <!--Forget Password-->
     <string name="Forget_Email">Email Address</string>
-    <string name="Back">Back to Login Page</string>
 
-    <!--Driver Profile-->
+    <!--User Profile-->
     <string name="btnUpdate">Save</string>
     <string name="Image_View">Image</string>
     <string name="Phone_Number1">Default Phone</string>
     <string name="Alt_Number">Alternate Number</string>
-    <string name="VehicleType">Vehicle Type</string>
-    <string name="Reg_Number">Registration Number</string>
-    <string name="Color">Color</string>
-    <string name="Licence_Img">Licence</string>
-    <string name="CNIC_Img">CNIC</string>
+
+    <!--Cargo Details-->
+    <string name="CargoDetail">Item Description</string>
+    <string name="GatePassImage">Gate Pass Image</string>
+    <string name="Weight">Approx Weight</string>
+    <string name="Units">Approx Units</string>
 
     <!--Vehicle Type-->
     <string name="VehicleType1">Suzuki Open</string>
@@ -51,10 +55,29 @@
 
     <string name="home">Home</string>
     <string name="history">History</string>
-    <string name="payment">Payment History</string>
+    <string name="cargo_calculator">Cargo Calculator</string>
     <string name="action_settings">Settings</string>
     <string name="get_help">Get Help</string>
     <string name="log_out">Logout</string>
     <string name="title_activity_maps">Map</string>
+    <string name="profile">Profile</string>
+    <string name="CNIC">CNIC</string>
+    <string name="UploadLicense">Upload License</string>
+    <string name="VehicleRegistrationNumber">Vehicle Reg:Number</string>
+    <string name="CarType1">Suzuki</string>
+    <string name="CarTYpe2">Riksha</string>
+    <string name="AcceptTerms">Accept Terms</string>
+    <string name="ProfilePicture">Set Profile Piture</string>
+    <string name="back">Return to Login</string>
+    <string name="wallet">Wallet</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Profile-->
+    <string name="backto">Home</string>
+    <string name="customer_name">Name</string>
+    <string name="customer_number">Phone</string>
+    <string name="btn_confirm">Confirm</string>
 </resources>
+

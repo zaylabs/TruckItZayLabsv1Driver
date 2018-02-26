@@ -5,33 +5,50 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/Profile"
+            android:title="@string/profile"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            />
+
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/History"
+            android:title="@string/history"
+            android:icon="@drawable/ic_history_black_24dp"
+            />
+
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/wallet"
+            android:title="@string/wallet"
+            android:icon="@drawable/ic_monetization_on_black_24dp"
+            />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/cargo_calculator"
+            android:title="@string/cargo_calculator"
+            android:icon="@drawable/ic_assessment_black_24dp"
+            />
+
+        <item
+            android:id="@+id/action_settings"
+            android:title="@string/action_settings"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            />
+
+
+
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="@string/log_out"
+            />
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/get_help"
+                android:title="@string/get_help"
+                android:icon="@drawable/ic_live_help_black_24dp"
+                />
         </menu>
     </item>
 

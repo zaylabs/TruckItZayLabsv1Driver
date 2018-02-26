@@ -1,57 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zaylabs.truckitzaylabsv1driver.RegistrationActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.zaylabs.truckitzaylabsv1driver.SignInActivity">
+
+    <ImageView
+        android:id="@+id/displaypic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:src="@drawable/ic_account_circle_black_60dp"
+        android:contentDescription="@string/ProfilePicture"
+        />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:id="@+id/layout_email_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/displaypic"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
 
         <EditText
-            android:id="@+id/etSignIn"
-            android:layout_width="match_parent"
+            android:id="@+id/field_name"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/Email_Desc"
-            android:inputType="textEmailAddress"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:hint="@string/customer_name"
+            android:inputType="text"
+            android:maxLines="1" />
+
+        <EditText
+            android:id="@+id/field_email"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
             android:hint="@string/Email"
-            tools:ignore="LabelFor"
-            android:layout_marginTop="40sp"/>
+            android:inputType="textEmailAddress"
+            android:maxLines="1" />
 
         <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
+            android:id="@+id/field_password"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:hint="@string/Hint_Password"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:hint="@string/Password"
             android:inputType="textPassword"
-            android:layout_marginBottom="40sp"
-            />
+            android:maxLines="1" />
 
 
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btnRegister"
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/field_phone"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/Register_btn"
-            android:text="@string/Register_btn"
-            android:background="@color/primaryColor"
-            android:gravity="center"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:hint="@string/Phone_Number"
+            android:inputType="phone"
+            android:maxLines="1" />
 
-            />
+        <EditText
+            android:id="@+id/field_CNIC"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:hint="@string/CNIC"
+            android:inputType="text"
+            android:maxLines="1" />
+
+        <EditText
+            android:id="@+id/field_field_CarReg"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:hint="@string/VehicleRegistrationNumber"
+            android:inputType="text"
+            android:maxLines="1" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:id="@+id/radiogroup_CarType"
+            >
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CarType1"
+                android:id="@+id/radio_CarType1"
+                android:checked="true"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CarTYpe2"
+                android:id="@+id/radio_CarType2"
+                />
+
+        </RadioGroup>
+
 
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
 
-<!--<EditText
-android:id="@+id/etPhone"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:hint="@string/Hint_Password"
-android:inputType="phone"
-android:text="@string/Phone_Number" />-->
+    <LinearLayout
+        android:id="@+id/layout_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_email_password"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/button_register"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="@string/Register_btn" />
+
+    </LinearLayout>
+
+</RelativeLayout>
