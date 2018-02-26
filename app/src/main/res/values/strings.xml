@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Truck It ZayLabs</string>
+    <string name="app_name">Truck It ZayLabs for Drivers</string>
 
     <!-- Login-->
     <string name="Sign_In_btn">Sign In</string>

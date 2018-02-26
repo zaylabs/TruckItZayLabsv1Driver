@@ -88,7 +88,6 @@
             android:hint="@string/VehicleRegistrationNumber"
             android:inputType="text"
             android:maxLines="1" />
-
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,6 +95,7 @@
             android:layout_gravity="center"
             android:id="@+id/radiogroup_CarType"
             >
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -1,5 +1,6 @@
 package com.zaylabs.truckitzaylabsv1driver;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,24 +15,45 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.zaylabs.truckitzaylabsv1driver.fragment.CargoCalculator;
+import com.zaylabs.truckitzaylabsv1driver.fragment.HelpFragment;
+import com.zaylabs.truckitzaylabsv1driver.fragment.HistoryFragment;
+import com.zaylabs.truckitzaylabsv1driver.fragment.ProfileFragment;
+import com.zaylabs.truckitzaylabsv1driver.fragment.SettingsFragment;
+import com.zaylabs.truckitzaylabsv1driver.fragment.WalletFragment;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
+    private DatabaseReference mfirebaseDB;
+
+    private TextView mNameField, mPhoneField;
+
+    private ImageView mProfileImage;
+
+    private String mProfileImageUrl;
+
+    private String mName;
+    private String mPhone;
     private String userID;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -41,9 +63,9 @@ public class MainActivity extends AppCompatActivity
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
-                    Toast.makeText(MainActivity.this, "User is Signed In", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "User is Signed In", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                    Intent intent = new Intent(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, com.zaylabs.truckitzaylabsv1driver.SignInActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -51,8 +73,8 @@ public class MainActivity extends AppCompatActivity
         };
 
         userID = mAuth.getCurrentUser().getUid();
-
-
+        mfirebaseDB = FirebaseDatabase.getInstance().getReference().child("Users").child("driver").child(userID);
+        //   getUserInfo();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +94,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -112,17 +136,32 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        if (id == R.id.Profile) {
+            FragmentTransaction ft= getFragmentManager().beginTransaction();
+            ft.replace(R.id.cm, new com.zaylabs.truckitzaylabsv1driver.fragment.ProfileFragment());
+            ft.commit();
+        } else if (id == R.id.History) {
+            FragmentTransaction ft= getFragmentManager().beginTransaction();
+            ft.replace(R.id.cm, new com.zaylabs.truckitzaylabsv1driver.fragment.HistoryFragment());
+            ft.commit();
+        } else if (id == R.id.wallet) {
+            FragmentTransaction ft= getFragmentManager().beginTransaction();
+            ft.replace(R.id.cm, new com.zaylabs.truckitzaylabsv1driver.fragment.WalletFragment());
+            ft.commit();
+        } else if (id == R.id.cargo_calculator) {
+            FragmentTransaction ft= getFragmentManager().beginTransaction();
+            ft.replace(R.id.cm, new com.zaylabs.truckitzaylabsv1driver.fragment.CargoCalculator());
+            ft.commit();
+        } else if (id == R.id.action_settings) {
+            FragmentTransaction ft= getFragmentManager().beginTransaction();
+            ft.replace(R.id.cm, new com.zaylabs.truckitzaylabsv1driver.fragment.SettingsFragment());
+            ft.commit();
+        } else if (id == R.id.logout) {
+            mAuth.signOut();
+        } else if (id == R.id.get_help) {
+            FragmentTransaction ft= getFragmentManager().beginTransaction();
+            ft.replace(R.id.cm, new com.zaylabs.truckitzaylabsv1driver.fragment.HelpFragment());
+            ft.commit();
 
         }
 
@@ -130,4 +169,17 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(firebaseAuthListener);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(firebaseAuthListener);
+    }
+
+
 }
