@@ -148,9 +148,9 @@ public class MainActivity extends BaseActivity
             FragmentTransaction ft= getFragmentManager().beginTransaction();
             ft.replace(R.id.cm, new com.zaylabs.truckitzaylabsv1driver.fragment.WalletFragment());
             ft.commit();
-        } else if (id == R.id.cargo_calculator) {
+        } else if (id == R.id.documents) {
             FragmentTransaction ft= getFragmentManager().beginTransaction();
-            ft.replace(R.id.cm, new com.zaylabs.truckitzaylabsv1driver.fragment.CargoCalculator());
+            ft.replace(R.id.cm, new com.zaylabs.truckitzaylabsv1driver.fragment.DocumentsFragment());
             ft.commit();
         } else if (id == R.id.action_settings) {
             FragmentTransaction ft= getFragmentManager().beginTransaction();

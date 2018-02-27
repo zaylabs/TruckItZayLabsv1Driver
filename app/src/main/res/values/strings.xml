@@ -55,7 +55,7 @@
 
     <string name="home">Home</string>
     <string name="history">History</string>
-    <string name="cargo_calculator">Cargo Calculator</string>
+    <string name="document">Documents</string>
     <string name="action_settings">Settings</string>
     <string name="get_help">Get Help</string>
     <string name="log_out">Logout</string>

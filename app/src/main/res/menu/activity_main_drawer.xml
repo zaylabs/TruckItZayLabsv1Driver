@@ -22,8 +22,8 @@
             android:icon="@drawable/ic_monetization_on_black_24dp"
             />
         <item
-            android:id="@+id/cargo_calculator"
-            android:title="@string/cargo_calculator"
+            android:id="@+id/documents"
+            android:title="@string/document"
             android:icon="@drawable/ic_assessment_black_24dp"
             />
 
