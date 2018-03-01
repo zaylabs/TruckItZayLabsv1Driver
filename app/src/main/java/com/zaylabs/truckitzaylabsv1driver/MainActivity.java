@@ -54,6 +54,7 @@ import com.zaylabs.truckitzaylabsv1driver.fragment.ProfileFragment;
 import com.zaylabs.truckitzaylabsv1driver.fragment.SettingsFragment;
 import com.zaylabs.truckitzaylabsv1driver.fragment.WalletFragment;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends BaseActivity
@@ -84,8 +85,10 @@ public class MainActivity extends BaseActivity
     private String userID;
     private StorageReference mStorageRef;
     private DatabaseReference mDatabase;
-
-
+    private DatabaseReference mRefAvailable;
+    private Location mlat;
+    private Location mlng;
+    private Location mlocation;
 
     private TextView mNameField, mEmail, mTextViewDP;
 
@@ -115,7 +118,7 @@ public class MainActivity extends BaseActivity
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDBRef = mDatabase.child("users").child("driver").child(userID);
         mImageRef = mStorageRef.child(userID);
-
+        mRefAvailable= FirebaseDatabase.getInstance().getReference("driversAvailable").child(userID);
 
 
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -195,7 +198,9 @@ public class MainActivity extends BaseActivity
 
     private void connectDriver(){
         Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Driver Available", Toast.LENGTH_SHORT).show();
+
     }
+
 
     private void disconnectDriver(){
         Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Driver Not Available", Toast.LENGTH_SHORT).show();
@@ -320,8 +325,31 @@ public class MainActivity extends BaseActivity
         public void onMapReady(GoogleMap map) {
         mMap = map;
         enableMyLocation();
+        setOnMyLocationButtonClick();
+        setOnMyLocationClick();
 
 
+
+
+
+    }
+
+
+
+    private void setOnMyLocationClick() {
+        mMap.setOnMyLocationClickListener(new GoogleMap.OnMyLocationClickListener() {
+            @Override
+    public void onMyLocationClick(@NonNull Location location) {
+
+                Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+                mlocation = location;
+                Map<String, Object> driverAvailable = new HashMap<>();
+                driverAvailable.put("currentLocation", mlocation);
+                mRefAvailable.updateChildren(driverAvailable);
+            }
+        });
+    }
+    private void setOnMyLocationButtonClick() {
         mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
             public boolean onMyLocationButtonClick() {
@@ -332,15 +360,6 @@ public class MainActivity extends BaseActivity
             }
 
         });
-        mMap.setOnMyLocationClickListener(new GoogleMap.OnMyLocationClickListener() {
-            @Override
-            public void onMyLocationClick(@NonNull Location location) {
-                Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
-            }
-
-        });
-
-
     }
 
     /**
@@ -355,7 +374,6 @@ public class MainActivity extends BaseActivity
         } else if (mMap != null) {
             // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
-
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
         }
     }
