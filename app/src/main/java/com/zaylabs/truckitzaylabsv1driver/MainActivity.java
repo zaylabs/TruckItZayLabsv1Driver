@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -26,9 +27,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -73,6 +77,8 @@ public class MainActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
@@ -111,6 +117,8 @@ public class MainActivity extends BaseActivity
             }
         });
 
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -127,30 +135,40 @@ public class MainActivity extends BaseActivity
         mEmail = hView.findViewById(R.id.TextViewUserEmail);
         mNameField=hView.findViewById(R.id.TextViewUser);
         mDisplayPic =hView.findViewById(R.id.displaypic);
-        mWorkingSwitch = (Switch) findViewById(R.id.workingSwitch);
+
+        mWorkingSwitch = hView.findViewById(R.id.workingSwitch);
+
         mWorkingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (mWorkingSwitch.isChecked()){
                     connectDriver();
-                }else{
+                }else {
                     disconnectDriver();
                 }
             }
         });
-        
-        
-        
+        navigationView.getMenu().getItem(0).setCheckable(true);
+        FragmentManager fm = getFragmentManager();
+        android.support.v4.app.FragmentManager sFm = getSupportFragmentManager();
+        if (!sMapFragment.isAdded()){
+            sFm.beginTransaction().add(R.id.map,sMapFragment).commit();}
+        else{
+            sFm.beginTransaction().show(sMapFragment).commit();}
+
+
         sMapFragment.getMapAsync(this);
 
     }
 
+
+
     private void connectDriver(){
-        Toast.makeText(this,"User is Online!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Driver Available", Toast.LENGTH_SHORT).show();
     }
 
     private void disconnectDriver(){
-        Toast.makeText(this,"User is Offline!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Driver Not Available", Toast.LENGTH_SHORT).show();
     }
 
     private void getUserInfo(){
@@ -208,6 +226,7 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         FragmentManager fm = getFragmentManager();
         android.support.v4.app.FragmentManager sFm = getSupportFragmentManager();
+
         int id = item.getItemId();
 
         if (sMapFragment.isAdded())
@@ -219,6 +238,7 @@ public class MainActivity extends BaseActivity
             else
                 sFm.beginTransaction().show(sMapFragment).commit();
         }
+
         else if (id == R.id.Profile) {
 
             FragmentTransaction ft= getFragmentManager().beginTransaction();
@@ -267,7 +287,14 @@ public class MainActivity extends BaseActivity
 
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-
+        public void onMapReady(GoogleMap googleMap) {
+            // Add a marker in Sydney, Australia,
+            // and move the map's camera to the same location.
+            LatLng novex = new LatLng(25.403869, 68.367996);
+            googleMap.addMarker(new MarkerOptions().position(novex)
+                    .title("Marker in Novex Dry Cleaners"));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(novex));
+            googleMap.animateCamera(CameraUpdateFactory.zoomTo(16),2000,null);
+        }
     }
-}
+
