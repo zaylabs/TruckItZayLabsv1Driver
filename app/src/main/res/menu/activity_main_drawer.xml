@@ -4,6 +4,13 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/Home"
+            android:title="Home"
+            android:icon="@drawable/ic_home_black_24dp"
+            />
+
         <item
             android:id="@+id/Profile"
             android:title="@string/profile"
