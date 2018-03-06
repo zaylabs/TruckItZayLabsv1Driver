@@ -53,8 +53,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -77,6 +80,7 @@ import java.util.Map;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,OnMapReadyCallback,ActivityCompat.OnRequestPermissionsResultCallback {
 
+    private Marker mNow;
 
     /*Location Update*/
     private static final String TAGLoc = MainActivity.class.getSimpleName();
@@ -338,11 +342,6 @@ public class MainActivity extends BaseActivity
         Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Driver Available", Toast.LENGTH_SHORT).show();
         mRequestingLocationUpdates = true;
         startLocationUpdates();
-
-
-
-
-
     }
 
     private void saveLocation(){
@@ -350,12 +349,28 @@ public class MainActivity extends BaseActivity
         String mLati = mLatitudeTextView.getText().toString();
         String mLongi = mLongitudeTextView.getText().toString();
 
+
+
+        Double mLatiFloat= Double.parseDouble(mLati);
+        Double mLongiFloat= Double.parseDouble(mLongi);
+
         Map<String, Object> driverAvailable = new HashMap<>();
 
         driverAvailable.put("Latitude",mLati);
 
         driverAvailable.put("Longitude",mLongi);
         mRefAvailable.updateChildren(driverAvailable);
+
+        if(mNow != null){
+            mNow.remove();
+        }
+
+        LatLng newLatLngCL = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+        CameraUpdate mCameraCL= CameraUpdateFactory.newLatLngZoom(newLatLngCL,18);
+        mMap.moveCamera(mCameraCL);
+        mMap.animateCamera(mCameraCL);
+        mNow=mMap.addMarker(new MarkerOptions().position(newLatLngCL)
+                .title(mNameField.getText().toString()).draggable(true));
     }
 
 
@@ -499,10 +514,6 @@ public class MainActivity extends BaseActivity
         enableMyLocation();
         setOnMyLocationButtonClick();
         setOnMyLocationClick();
-
-
-
-
 
     }
 
@@ -809,7 +820,35 @@ public class MainActivity extends BaseActivity
             mLastUpdateTimeTextView.setText(String.format(Locale.ENGLISH, "%s: %s",
                     mLastUpdateTimeLabel, mLastUpdateTime));
 
+/*
+            */
+/*if(mNow != null){
+                mNow.remove();
+            }
+
+            // Getting latitude of the current location
+            double latitude = mCurrentLocation.getLatitude();
+
+            // Getting longitude of the current location
+            double longitude = mCurrentLocation.getLongitude();
+
+            // Creating a LatLng object for the current location
+            LatLng mlatLngCL = new LatLng(latitude, longitude);
+            mNow = mMap.addMarker(new MarkerOptions().position(mlatLngCL));
+            // Showing the current location in Google Map
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(mlatLngCL));
+
+            //Changing Marker Icon
+            mNow.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.markercicon));
+
+            // Zoom in the Google Map
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+*/
+
+
+
             saveLocation();
+
         }
     }
 
