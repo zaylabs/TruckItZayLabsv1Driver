@@ -64,14 +64,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.sql.Time;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -196,7 +200,8 @@ public class MainActivity extends BaseActivity
     private String userID;
     private StorageReference mStorageRef;
     private DatabaseReference mDatabase;
-    private DatabaseReference mRefAvailable;
+    private DatabaseReference mRefVT1Available;
+    private DatabaseReference mRefVT2Available;
     private Location mlat;
     private Location mlng;
     private Location mlocation;
@@ -205,6 +210,7 @@ public class MainActivity extends BaseActivity
 
     private ImageView mDisplayPic;
     private Switch mWorkingSwitch;
+    private String mVahicleType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,8 +235,8 @@ public class MainActivity extends BaseActivity
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDBRef = mDatabase.child("users").child("driver").child(userID);
         mImageRef = mStorageRef.child(userID);
-        mRefAvailable= FirebaseDatabase.getInstance().getReference("driversAvailable").child(userID);
-
+        mRefVT1Available= FirebaseDatabase.getInstance().getReference("driversAvailable").child("VT1").child(userID);
+        mRefVT2Available= FirebaseDatabase.getInstance().getReference("driversAvailable").child("VT2").child(userID);
 
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
 
@@ -306,7 +312,6 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         mTextViewDP =hView.findViewById(R.id.TextViewDP);
-
         mEmail = hView.findViewById(R.id.TextViewUserEmail);
         mNameField=hView.findViewById(R.id.TextViewUser);
         mDisplayPic =hView.findViewById(R.id.displaypic);
@@ -339,46 +344,63 @@ public class MainActivity extends BaseActivity
 
 
     private void connectDriver(){
-        Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Driver Available", Toast.LENGTH_SHORT).show();
+        Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Driver Available"+mVahicleType, Toast.LENGTH_SHORT).show();
+
         mRequestingLocationUpdates = true;
         startLocationUpdates();
     }
 
-    private void saveLocation(){
+    private void saveLocation() {
+
 
         String mLati = mLatitudeTextView.getText().toString();
         String mLongi = mLongitudeTextView.getText().toString();
 
 
+        Double mLatiFloat = Double.parseDouble(mLati);
+        Double mLongiFloat = Double.parseDouble(mLongi);
 
-        Double mLatiFloat= Double.parseDouble(mLati);
-        Double mLongiFloat= Double.parseDouble(mLongi);
+        if (mVahicleType.equals("Suzuki") ) {
+            Map<String, Object> driverVT1Available = new HashMap<>();
 
-        Map<String, Object> driverAvailable = new HashMap<>();
+            driverVT1Available.put("Latitude", mLati);
 
-        driverAvailable.put("Latitude",mLati);
+            driverVT1Available.put("Longitude", mLongi);
 
-        driverAvailable.put("Longitude",mLongi);
-        mRefAvailable.updateChildren(driverAvailable);
+            mRefVT1Available.updateChildren(driverVT1Available);
 
-        if(mNow != null){
-            mNow.remove();
-        }
+        } else if (mVahicleType.equals("Riksha")){
 
-        LatLng newLatLngCL = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-        CameraUpdate mCameraCL= CameraUpdateFactory.newLatLngZoom(newLatLngCL,18);
-        mMap.moveCamera(mCameraCL);
-        mMap.animateCamera(mCameraCL);
-        mNow=mMap.addMarker(new MarkerOptions().position(newLatLngCL)
-                .title(mNameField.getText().toString()).draggable(true));
-    }
+            Map<String, Object> driverVT2Available = new HashMap<>();
+            driverVT2Available.put("Latitude", mLati);
+            driverVT2Available.put("Longitude", mLongi);
+            mRefVT2Available.updateChildren(driverVT2Available);
+        };
 
+             if(mNow != null) {
+                    mNow.remove();
+                }
 
-    private void disconnectDriver(){
+                    LatLng newLatLngCL = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+                    CameraUpdate mCameraCL = CameraUpdateFactory.newLatLngZoom(newLatLngCL, 18);
+                    mMap.moveCamera(mCameraCL);
+                    mMap.animateCamera(mCameraCL);
+                    mNow = mMap.addMarker(new MarkerOptions().position(newLatLngCL)
+                            .title(newLatLngCL.toString()).draggable(true));
+
+                }
+
+    private void disconnectDriver() {
         Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Driver Not Available", Toast.LENGTH_SHORT).show();
         stopLocationUpdates();
-        mRefAvailable.setValue(null);
+
+        if (mVahicleType.equals("Suzuki") ) {
+            mRefVT1Available.setValue(null);
+        } else if (mVahicleType.equals("Riksha") ) {
+            mRefVT2Available.setValue(null);
+        };
     }
+
 
     private void getUserInfo(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -387,6 +409,19 @@ public class MainActivity extends BaseActivity
             mNameField.setText(name);
             String email = user.getEmail();
             mEmail.setText(email);
+
+            mDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mVahicleType= dataSnapshot.child("car_type").getValue().toString();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
             if (user.getPhotoUrl()!=null){
                 String photodp = user.getPhotoUrl().toString(
                 );
@@ -395,6 +430,7 @@ public class MainActivity extends BaseActivity
                 navigationView.setNavigationItemSelectedListener(this);
                 Picasso.with(hView.getContext()).load(photodp).resize(150,150).centerCrop().into(mDisplayPic);
             }}
+
     }
 
 
@@ -1014,6 +1050,9 @@ public class MainActivity extends BaseActivity
             }
         }
     }
+
+
+
 
 }
 
