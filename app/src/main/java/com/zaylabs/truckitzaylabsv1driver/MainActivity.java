@@ -36,6 +36,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -205,6 +207,8 @@ public class MainActivity extends BaseActivity
     private Location mlat;
     private Location mlng;
     private Location mlocation;
+    private GeoFire geoFireVT1;
+    private GeoFire geoFireVT2;
 
     private TextView mNameField, mEmail, mTextViewDP;
 
@@ -235,8 +239,10 @@ public class MainActivity extends BaseActivity
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDBRef = mDatabase.child("users").child("driver").child(userID);
         mImageRef = mStorageRef.child(userID);
-        mRefVT1Available= FirebaseDatabase.getInstance().getReference("driversAvailable").child("VT1").child(userID);
-        mRefVT2Available= FirebaseDatabase.getInstance().getReference("driversAvailable").child("VT2").child(userID);
+        mRefVT1Available= mDatabase.child("driversAvailable").child("VT1");
+        mRefVT2Available= mDatabase.child("driversAvailable").child("VT2");
+        geoFireVT1 = new GeoFire(mRefVT1Available);
+        geoFireVT2 = new GeoFire(mRefVT2Available);
 
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
 
@@ -352,6 +358,7 @@ public class MainActivity extends BaseActivity
 
     private void saveLocation() {
 
+/*
 
         String mLati = mLatitudeTextView.getText().toString();
         String mLongi = mLongitudeTextView.getText().toString();
@@ -359,24 +366,50 @@ public class MainActivity extends BaseActivity
 
         Double mLatiFloat = Double.parseDouble(mLati);
         Double mLongiFloat = Double.parseDouble(mLongi);
+*/
+
 
         if (mVahicleType.equals("Suzuki") ) {
-            Map<String, Object> driverVT1Available = new HashMap<>();
+
+            geoFireVT1.setLocation(userID, new GeoLocation(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), new GeoFire.CompletionListener() {
+                @Override
+                public void onComplete(String key, DatabaseError error) {
+                    if (error != null) {
+                        Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "There was an error saving the location to GeoFire: " + error, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Location saved on server successfully!", Toast.LENGTH_LONG).show();
+
+                    }
+                }
+
+            });
+
+            /*Map<String, Object> driverVT1Available = new HashMap<>();
 
             driverVT1Available.put("Latitude", mLati);
 
             driverVT1Available.put("Longitude", mLongi);
 
             mRefVT1Available.updateChildren(driverVT1Available);
-
+*/
         } else if (mVahicleType.equals("Riksha")){
 
-            Map<String, Object> driverVT2Available = new HashMap<>();
+            geoFireVT2.setLocation(userID, new GeoLocation(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), new GeoFire.CompletionListener() {
+                @Override
+                public void onComplete(String key, DatabaseError error) {
+                    if (error != null) {
+                        Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "There was an error saving the location to GeoFire: " + error, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Location saved on server successfully!", Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            });
+            /*Map<String, Object> driverVT2Available = new HashMap<>();
             driverVT2Available.put("Latitude", mLati);
             driverVT2Available.put("Longitude", mLongi);
-            mRefVT2Available.updateChildren(driverVT2Available);
+            mRefVT2Available.updateChildren(driverVT2Available);*/
         };
-
              if(mNow != null) {
                     mNow.remove();
                 }
@@ -390,14 +423,36 @@ public class MainActivity extends BaseActivity
 
                 }
 
+
+
     private void disconnectDriver() {
         Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Driver Not Available", Toast.LENGTH_SHORT).show();
         stopLocationUpdates();
 
         if (mVahicleType.equals("Suzuki") ) {
-            mRefVT1Available.setValue(null);
+            geoFireVT1.removeLocation(userID, new GeoFire.CompletionListener() {
+                @Override
+                public void onComplete(String key, DatabaseError error) {
+                    if (error != null) {
+                        Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "There was an error saving the location to GeoFire: " + error, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Location saved on server successfully!", Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            });
         } else if (mVahicleType.equals("Riksha") ) {
-            mRefVT2Available.setValue(null);
+            geoFireVT2.removeLocation(userID, new GeoFire.CompletionListener() {
+                @Override
+                public void onComplete(String key, DatabaseError error) {
+                    if (error != null) {
+                        Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "There was an error saving the location to GeoFire: " + error, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(com.zaylabs.truckitzaylabsv1driver.MainActivity.this, "Location saved on server successfully!", Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            });
         };
     }
 
@@ -856,6 +911,7 @@ public class MainActivity extends BaseActivity
             mLastUpdateTimeTextView.setText(String.format(Locale.ENGLISH, "%s: %s",
                     mLastUpdateTimeLabel, mLastUpdateTime));
 
+            saveLocation();
 /*
             */
 /*if(mNow != null){
@@ -883,7 +939,7 @@ public class MainActivity extends BaseActivity
 
 
 
-            saveLocation();
+
 
         }
     }
