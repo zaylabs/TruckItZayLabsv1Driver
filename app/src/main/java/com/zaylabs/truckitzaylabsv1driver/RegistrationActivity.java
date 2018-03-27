@@ -205,6 +205,10 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         userID = mAuth.getCurrentUser().getUid();
         mDBRef = mDatabase.child("users").child("driver").child(userID);
         Map<String, Object> userUpdates = new HashMap<>();
+        final String name = mName.getText().toString();
+        userUpdates.put("name", name);
+        final String email = mAuth.getCurrentUser().getEmail();
+        userUpdates.put("email", email);
         final String phone = mPhone.getText().toString();
         userUpdates.put("phone", phone);
         final String cnic = mCNIC.getText().toString();

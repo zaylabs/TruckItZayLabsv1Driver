@@ -147,7 +147,7 @@ public class MainActivity extends BaseActivity
     /**
      * Represents a geographical location.
      */
-    private Location mCurrentLocation;
+    public Location mCurrentLocation;
 
     // UI Widgets.
     /*private Button mStartUpdatesButton;*/
